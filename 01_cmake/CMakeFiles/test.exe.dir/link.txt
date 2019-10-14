@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/test.exe.dir/test.cpp.o  -o test.exe  -L/home/nik/Desktop/G2Repo/01_cmake/../googletest/googletest/build/lib -Wl,-rpath,/home/nik/Desktop/G2Repo/01_cmake/../googletest/googletest/build/lib -lgtest -lgtest_main -lpthread 

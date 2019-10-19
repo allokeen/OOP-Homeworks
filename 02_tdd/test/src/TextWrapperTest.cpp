@@ -18,4 +18,5 @@ TEST( TextWrapper, WrappingGivenText)
     auto wrapper = TextWrapper{};
     EXPECT_EQ( "", wrapper.Wrapping(1,""));
     EXPECT_EQ( "a", wrapper.Wrapping(1,"a"));
+    EXPECT_EQ( "a\nb", wrapper.Wrapping(1,"ab"));
 }

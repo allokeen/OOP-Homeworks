@@ -13,7 +13,7 @@ std::string TextWrapper::Wrapping(int columnsOut, std::string text) {
         for( int i=0; i<text.length(); i++)
         {
             int o = i - OmittedSpaces;
-            if(i!=0 && i%columnsOut==0 && text[i]==' ')
+            if(i!=0 && i%columnsOut==0+OmittedSpaces && text[i]==' ')
             {
                 OmittedSpaces++;
                 continue;

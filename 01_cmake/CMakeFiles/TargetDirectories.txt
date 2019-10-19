@@ -1,5 +1,0 @@
-/home/nik/Desktop/G2Repo/01_cmake/CMakeFiles/rebuild_cache.dir
-/home/nik/Desktop/G2Repo/01_cmake/CMakeFiles/utils.dir
-/home/nik/Desktop/G2Repo/01_cmake/CMakeFiles/edit_cache.dir
-/home/nik/Desktop/G2Repo/01_cmake/CMakeFiles/test.exe.dir
-/home/nik/Desktop/G2Repo/01_cmake/CMakeFiles/main.exe.dir

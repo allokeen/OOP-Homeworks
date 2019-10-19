@@ -1,18 +1,13 @@
-cmake_minimum_required(VERSION 3.13.3)
+cmake_minimum_required(VERSION 3.10)
 project(01_cmake)
 
-include_directories(../googletest/googletest/googletest/include)
-link_directories(../googletest/googletest/build/lib)
+set(HEADERS include/Dummy.h)
+set(SOURCES src/Dummy.cpp)
 
-#------------pliki wykonywalne
-add_executable( main.exe main.cpp Dummy.h)
-add_executable( test.exe test.cpp Dummy.h)
+add_library(01_cmake_lib ${HEADERS} ${SOURCES})
+target_include_directories(01_cmake_lib PUBLIC include)
 
-#------------biblioteka libutils.a
-add_library (utils STATIC main.cpp test.cpp)
+add_executable(01_cmake src/main.cpp)
+target_link_libraries(01_cmake 01_cmake_lib)
 
-#add_executable(01_cmake main.cpp Dummy.h test.cpp)
-
-find_library(utils cmake-build-debug)
-target_link_libraries(main.exe utils pthread)
-target_link_libraries(test.exe gtest gtest_main pthread)
+add_subdirectory(test)

@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/01_cmake.dir/main.cpp.o CMakeFiles/01_cmake.dir/test.cpp.o  -o 01_cmake  -L/home/nik/Desktop/G2Repo/01_cmake/../googletest/googletest/build/lib 

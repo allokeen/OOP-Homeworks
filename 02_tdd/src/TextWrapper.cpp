@@ -5,5 +5,5 @@ int TextWrapper::columns() const {
 }
 
 std::string TextWrapper::Wrapping(int columnOut, std::string text) {
-    return "";
+    return text;
 }

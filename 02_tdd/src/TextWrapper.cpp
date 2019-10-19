@@ -7,14 +7,20 @@ int TextWrapper::columns() const {
 std::string TextWrapper::Wrapping(int columnsOut, std::string text) {
 
         std:: string bufor;
+        int OmittedSpaces=0;                // spacje pominięte - zamienione na \n
+                                            // wartość służąca "cofaniu" indeksu i bieżącego znaku text[i] podczas dodawania znaku nowej linii
 
         for( int i=0; i<text.length(); i++)
-        {       if(i%columnsOut==0 && text[i]==' ')
-                    continue;
-                bufor = bufor + text[i];
-                if(i!=text.length()-1  && i%columnsOut==columnsOut-1)
-                    bufor = bufor + "\n";
+        {
+            int o = i - OmittedSpaces;
+            if(i!=0 && i%columnsOut==0 && text[i]==' ')
+            {
+                OmittedSpaces++;
+                continue;
             }
+            bufor = bufor + text[i];
+            if(i!=text.length()-1  && o%columnsOut==columnsOut-1)
+                bufor = bufor + "\n";
+        }
         return bufor;
-
 }

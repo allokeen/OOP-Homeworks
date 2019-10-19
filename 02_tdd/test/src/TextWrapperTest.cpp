@@ -28,4 +28,5 @@ TEST( TextWrapper, WrappingTextWithSpaces)
 {
     auto wrapper = TextWrapper{};
     EXPECT_EQ( "", wrapper.Wrapping(1, " "));
+    EXPECT_EQ( "", wrapper.Wrapping(1, "    "));
 }

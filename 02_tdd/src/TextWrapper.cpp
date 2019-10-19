@@ -9,7 +9,8 @@ std::string TextWrapper::Wrapping(int columnsOut, std::string text) {
         std:: string bufor;
 
         for( int i=0; i<text.length(); i++)
-            {
+        {       if(i%columnsOut==0 && text[i]==' ')
+                    continue;
                 bufor = bufor + text[i];
                 if(i!=text.length()-1  && i%columnsOut==columnsOut-1)
                     bufor = bufor + "\n";

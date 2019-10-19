@@ -7,11 +7,8 @@ int TextWrapper::columns() const {
 std::string TextWrapper::Wrapping(int columnsOut, std::string text) {
 
         std:: string bufor;
-        if( text.length() < 2) {
-            if(text.length()==1 && text==" ")
-                return "";
-            return text;
-        }
+        if(text.length()==1 && text==" ")
+            return "";
         else
         {
             for( int i=0; i<text.length(); i++)

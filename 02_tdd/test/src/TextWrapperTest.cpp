@@ -28,5 +28,5 @@ TEST( TextWrapper, WrappingTextWithSpaces)
 {
     auto wrapper = TextWrapper{};
     EXPECT_EQ( "a\nb", wrapper.Wrapping(1, "a b"));
-
+    EXPECT_EQ( "Ala\nkot", wrapper.Wrapping( 3, "Ala kot"));
 }

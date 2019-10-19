@@ -14,7 +14,7 @@ std::string TextWrapper::Wrapping(int columnsOut, std::string text) {
             for( int i=0; i<text.length(); i++)
             {
                 bufor = bufor + text[i];
-                if(i!=text.length()-1)
+                if(i!=text.length()-1  && i%columnsOut==columnsOut-1)
                     bufor = bufor + "\n";
             }
             return bufor;

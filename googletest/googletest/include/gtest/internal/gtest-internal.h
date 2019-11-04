@@ -662,7 +662,7 @@ struct NameGeneratorSelector {
 };
 
 template <typename NameGenerator>
-void GenerateNamesRecursively(Types0, std::vector<std::string>*, int) {}
+void GenerateNamesRecursively(internal::None, std::vector<std::string>*, int) {}
 
 template <typename NameGenerator, typename Types>
 void GenerateNamesRecursively(Types, std::vector<std::string>* result, int i) {
@@ -729,7 +729,7 @@ class TypeParameterizedTest {
 
 // The base case for the compile time recursion.
 template <GTEST_TEMPLATE_ Fixture, class TestSel>
-class TypeParameterizedTest<Fixture, TestSel, Types0> {
+class TypeParameterizedTest<Fixture, TestSel, internal::None> {
  public:
   static bool Register(const char* /*prefix*/, const CodeLocation&,
                        const char* /*case_name*/, const char* /*test_names*/,
@@ -781,7 +781,7 @@ class TypeParameterizedTestSuite {
 
 // The base case for the compile time recursion.
 template <GTEST_TEMPLATE_ Fixture, typename Types>
-class TypeParameterizedTestSuite<Fixture, Templates0, Types> {
+class TypeParameterizedTestSuite<Fixture, internal::None, Types> {
  public:
   static bool Register(const char* /*prefix*/, const CodeLocation&,
                        const TypedTestSuitePState* /*state*/,
@@ -855,8 +855,7 @@ class GTEST_API_ Random {
 // true if and only if T is type proto2::Message or a subclass of it.
 template <typename T>
 struct IsAProtocolMessage
-    : public bool_constant<
-          std::is_convertible<const T*, const ::proto2::Message*>::value> {};
+    : public std::is_convertible<const T*, const ::proto2::Message*> {};
 
 // When the compiler sees expression IsContainerTest<C>(0), if C is an
 // STL-style container class, the first overload of IsContainerTest

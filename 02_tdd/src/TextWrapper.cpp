@@ -1,26 +1,31 @@
 #include "TextWrapper.h"
 
-int TextWrapper::columns() const {
-    return 10;
+TextWrapper::TextWrapper(unsigned long providedColumns)
+    : providedColumns(providedColumns) {
+
 }
 
-std::string TextWrapper::Wrapping(int columnsOut, std::string text) {
+unsigned long TextWrapper::columns() const {
+    return providedColumns;
+}
 
-        std:: string bufor;
-        int OmittedSpaces=0;                // spacje pominięte - zamienione na \n
-                                            // wartość służąca "cofaniu" indeksu i bieżącego znaku text[i] podczas dodawania znaku nowej linii
+std::string TextWrapper::wrap(const std::string &string) const {
 
-        for( int i=0; i<text.length(); i++)
-        {
-            int o = i - OmittedSpaces;
-            if(i!=0 && i%columnsOut==0+OmittedSpaces && text[i]==' ')
-            {
-                OmittedSpaces++;
-                continue;
-            }
-            bufor = bufor + text[i];
-            if(i!=text.length()-1  && o%columnsOut==columnsOut-1)
-                bufor = bufor + "\n";
+    if (string.size() > providedColumns) {
+
+        std::size_t divisionStart = providedColumns;
+        std::size_t divisionStop = providedColumns;
+
+        auto space = string.rfind(' ', providedColumns);
+
+        if (space != std::string::npos) {
+
+            divisionStart = space;
+            divisionStop = divisionStart + 1;
         }
-        return bufor;
+
+        return string.substr(0, divisionStart) + "\n" + wrap(string.substr(divisionStop));
+    }
+
+    return string;
 }

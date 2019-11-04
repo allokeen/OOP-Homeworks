@@ -1,37 +1,79 @@
 #include "TestIncludes.h"
 #include "TextWrapper.h"
 
-TEST(TextWrapper, CreateInstance) {
+TEST(TextWrapper, Constructor) {
 
-    auto wrapper = TextWrapper{};
+    TextWrapper textWrapper{};
 }
 
-TEST(TextWrapper, HasColumnsGetter) {
+TEST(TextWrapper, Constructor_DefaultNumberOfColumns) {
 
-    auto wrapper = TextWrapper{};
-
-    EXPECT_EQ(10, wrapper.columns());
+    TextWrapper textWrapper{};
+    EXPECT_EQ(10u, textWrapper.columns());
 }
 
-TEST( TextWrapper, WrappingGivenText)
-{
-    auto wrapper = TextWrapper{};
+TEST(TextWrapper, Constructor_CustomNumberOfColumns) {
 
-    EXPECT_EQ( "", wrapper.Wrapping(1,""));                              //1 column
-    EXPECT_EQ( "a", wrapper.Wrapping(1,"a"));
-    EXPECT_EQ( "a\nb", wrapper.Wrapping(1,"ab"));
-    EXPECT_EQ( "a\nb\nc", wrapper.Wrapping(1,"abc"));
-    EXPECT_EQ( "ab\nc", wrapper.Wrapping(2, "abc"));                     //2 columns
-    EXPECT_EQ( "ab\ncd", wrapper.Wrapping(2, "abcd"));
-    EXPECT_EQ( "abc\ndef", wrapper.Wrapping(3, "abcdef"));               //3 columns
-    EXPECT_EQ( "abcd\nefgh\nijkl", wrapper.Wrapping(4, "abcdefghijkl")); //4 columns
+    TextWrapper textWrapper{3u};
+    EXPECT_EQ(3u, textWrapper.columns());
 }
 
-TEST( TextWrapper, WrappingTextWithSpaces)                                                             //Tekst ze spacjami
-{
-    auto wrapper = TextWrapper{};
-    EXPECT_EQ( "a\nb", wrapper.Wrapping(1, "a b"));
-    EXPECT_EQ( "Ala\nkot", wrapper.Wrapping( 3, "Ala kot"));
-    EXPECT_EQ( "Pies\nAzor\nlubi\nkoty", wrapper.Wrapping(4, "Pies Azor lubi koty"));
-    EXPECT_EQ( "Karol\nKamil", wrapper.Wrapping(5, "Karol  Kamil"));                        //kilka spacji między słowami
+TEST(TextWrapper, OneColumn_Wrap_Empty) {
+
+    TextWrapper textWrapper{1u};
+    EXPECT_EQ("", textWrapper.wrap(""));
+}
+
+TEST(TextWrapper, OneColumn_Wrap_SingleLetter) {
+
+    TextWrapper textWrapper{1u};
+    EXPECT_EQ("a", textWrapper.wrap("a"));
+}
+
+TEST(TextWrapper, OneColumn_Wrap_TwoLetters) {
+
+    TextWrapper textWrapper{1u};
+    EXPECT_EQ("a\nb", textWrapper.wrap("ab"));
+}
+
+TEST(TextWrapper, TwoColumns_Wrap_FourLetters) {
+
+    TextWrapper textWrapper{2u};
+    EXPECT_EQ("ab\ncd", textWrapper.wrap("abcd"));
+}
+
+TEST(TextWrapper, OneColumn_Wrap_SixLetters) {
+
+    TextWrapper textWrapper{1u};
+    EXPECT_EQ("a\nb\nc\nd\ne\nf", textWrapper.wrap("abcdef"));
+}
+
+TEST(TextWrapper, TwoColumns_Wrap_SixLetters) {
+
+    TextWrapper textWrapper{2u};
+    EXPECT_EQ("ab\ncd\nef", textWrapper.wrap("abcdef"));
+}
+
+TEST(TextWrapper, OneColumn_Wrap_TwoLetters_WithSpace) {
+
+    TextWrapper textWrapper{1u};
+    EXPECT_EQ("a\nb", textWrapper.wrap("a b"));
+}
+
+TEST(TextWrapper, OneColumn_Wrap_SixLetters_WithSpace) {
+
+    TextWrapper textWrapper{1u};
+    EXPECT_EQ("a\nb\nc\nd\ne\nf", textWrapper.wrap("a b c d e f"));
+}
+
+TEST(TextWrapper, ThreeClumns_DivideBySpacesNotWords) {
+
+    TextWrapper textWrapper{5u};
+    EXPECT_EQ("foo\nbar\nbaz", textWrapper.wrap("foo bar baz"));
+}
+
+TEST(TextWrapper, ThreeClumns_DivideBySpacesNotWords_UseLastSpace) {
+
+    TextWrapper textWrapper{7u};
+    EXPECT_EQ("aa bb\ncc dd\nee", textWrapper.wrap("aa bb cc dd ee"));
 }

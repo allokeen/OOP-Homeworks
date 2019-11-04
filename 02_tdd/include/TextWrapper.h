@@ -5,7 +5,12 @@
 class TextWrapper {
 public:
 
-    int columns() const;
+    explicit TextWrapper(unsigned long providedColumns = 10u);
 
-    std::string Wrapping( int, std::string);
+    unsigned long columns() const;
+
+    std::string wrap(const std::string& string) const;
+
+private:
+    unsigned long providedColumns;
 };

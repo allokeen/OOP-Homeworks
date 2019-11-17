@@ -105,4 +105,39 @@ TEST(MediumTest, Clear) {
     }
 }
 
-// TODO: Add tests for your operators implementation!
+TEST(MediumTest, LessThanOperator)
+{
+    Medium medium{};
+    Medium medium1{};
+    for (int i=0; i< medium.SIZE; i++){
+        medium.data[i]=1;
+        medium1.data[i]=2;
+    }
+    ASSERT_FALSE(medium < medium);
+    ASSERT_TRUE(medium < medium1);
+}
+
+TEST(MediumTest, EqualityOperator)
+{
+    Medium medium{};
+    Medium medium1{};
+    for (int i=0; i< medium.SIZE; i++){
+        medium.data[i]=1;
+        medium1.data[i]=2;
+    }
+    ASSERT_TRUE(medium == medium);
+    ASSERT_FALSE(medium == medium1);
+}
+
+TEST(MediumTest, HashFunction)
+{
+    Medium medium{};
+    Medium medium1{};
+
+    for (int i=0; i< medium.SIZE; i++){
+        medium.data[i]=1;
+        medium1.data[i]=2;
+    }
+    ASSERT_TRUE( std::hash<Medium>()(medium) == std::hash<Medium>()(medium));
+    ASSERT_FALSE(std::hash<Medium>()(medium1) == std::hash<Medium>()(medium));
+}

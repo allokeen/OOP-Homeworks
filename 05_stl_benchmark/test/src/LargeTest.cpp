@@ -108,5 +108,38 @@ TEST(LargeTest, Clear) {
     }
 }
 
+TEST(LargeTest, LessThanOperator)
+{
+    Large large{};
+    Large large1{};
+    for (int i=0; i<large1.SIZE; i++){
+        large.data[i]=0;
+        large1.data[i]=1;
+    }
+    ASSERT_FALSE(large < large);
+    ASSERT_TRUE(large < large1);
+}
 
-// TODO: Add tests for your operators implementation!
+TEST(LargeTest, EqualityOperator) {
+    Large large{};
+    Large large1{};
+    for (int i=0; i < large1.SIZE; i++) {
+        large.data[i] = 0;
+        large1.data[i] = 1;
+    }
+    ASSERT_TRUE(large == large);
+    ASSERT_FALSE(large == large1);
+}
+
+TEST(LargeTest, HashFunction)
+{
+    Large large{};
+    Large large1{};
+
+    for (int i=0; i<large1.SIZE; i++){
+        large.data[i]=0;
+        large1.data[i]=1;
+    }
+    ASSERT_TRUE( std::hash<Large>()(large) == std::hash<Large>()(large));
+    ASSERT_FALSE(std::hash<Large>()(large1) == std::hash<Large>()(large));
+}

@@ -111,5 +111,25 @@ TEST(SmallTest, Clear) {
     }
 }
 
+TEST(SmallTest, LessThanOperator)
+{
+    Small small{};
+    ASSERT_EQ( false, small<small);
+}
 
-// TODO: Add tests for your operators implementation!
+TEST(SmallTest, EqualityOperator)
+{
+    Small small{};
+    ASSERT_EQ( true, small==small);
+}
+
+TEST(SmallTest, HashFunction)
+{
+    Small small1;
+    Small small2;
+    small1.data[0]=1;
+    small2.data[0]=2;
+
+    ASSERT_TRUE( std::hash<Small>()(small1) == std::hash<Small>()(small1));
+    ASSERT_FALSE(std::hash<Small>()(small2) == std::hash<Small>()(small1));
+}

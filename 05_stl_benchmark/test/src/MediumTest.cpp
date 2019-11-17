@@ -113,7 +113,7 @@ TEST(MediumTest, LessThanOperator)
         medium.data[i]=1;
         medium1.data[i]=2;
     }
-    ASSERT_FALSE(medium < medium);
+    ASSERT_FALSE(medium1 < medium);
     ASSERT_TRUE(medium < medium1);
 }
 

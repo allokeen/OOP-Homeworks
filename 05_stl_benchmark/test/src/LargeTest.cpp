@@ -116,7 +116,7 @@ TEST(LargeTest, LessThanOperator)
         large.data[i]=0;
         large1.data[i]=1;
     }
-    ASSERT_FALSE(large < large);
+    ASSERT_FALSE(large1 < large);
     ASSERT_TRUE(large < large1);
 }
 

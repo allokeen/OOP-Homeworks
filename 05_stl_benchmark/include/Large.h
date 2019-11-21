@@ -24,7 +24,7 @@ struct Large {
 
     bool operator<(const Large &rhs) const {
         for (int i = 0; i<rhs.SIZE; i++){
-            if( this->data[i] > rhs.data[i])
+            if( this->data[i] >= rhs.data[i])
                 return false;
         }
         return true;

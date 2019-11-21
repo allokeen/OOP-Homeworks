@@ -18,7 +18,7 @@ void linearComplexity(State& state) {
     state.SetComplexityN(N);
 }
 
-BENCHMARK(linearComplexity)->RangeMultiplier(2)->Range(1, 1024)->Complexity();
+//BENCHMARK(linearComplexity)->RangeMultiplier(2)->Range(1, 1024)->Complexity();
 
 // This kind of benchmarks can be used for every method that does not modify container (opposed to e.g.: insert or erase).
 // Before entering 'for' loop we need to create collection and fill it with some data
@@ -46,7 +46,7 @@ void vectorSize(State& state) {
 
 // You should adjust range to fully utilize available RAM
 
-BENCHMARK(vectorSize)->RangeMultiplier(2)->Range(1, 1024)->Complexity();
+//BENCHMARK(vectorSize)->RangeMultiplier(2)->Range(1, 1024)->Complexity();
 
 void logarithmicComplexity(State& state) {
 
@@ -82,7 +82,7 @@ void logarithmicComplexity(State& state) {
     state.SetComplexityN(N);
 }
 
-BENCHMARK(logarithmicComplexity)->RangeMultiplier(2)->Range(1<<8, 1<<16)->Complexity();
+//BENCHMARK(logarithmicComplexity)->RangeMultiplier(2)->Range(1<<8, 1<<16)->Complexity();
 
 void randBenchmark(State& state) {
 
@@ -93,7 +93,7 @@ void randBenchmark(State& state) {
     }
 }
 
-BENCHMARK(randBenchmark);
+//BENCHMARK(randBenchmark);
 
 // Below example shows how benchmark can be implemented in incremental way with baselines
 // First we measure how much time it takes to create vector of given size
@@ -116,7 +116,7 @@ void vectorCreate(State& state) {
     state.SetComplexityN(N);
 }
 
-BENCHMARK(vectorCreate)->RangeMultiplier(2)->Range(1, 1<<15)->Complexity();
+//BENCHMARK(vectorCreate)->RangeMultiplier(2)->Range(1, 1<<15)->Complexity();
 
 void vectorCreateAndPushBack(State& state) {
 
@@ -144,4 +144,4 @@ void vectorCreateAndPushBack(State& state) {
     state.SetComplexityN(N);
 }
 
-BENCHMARK(vectorCreateAndPushBack)->RangeMultiplier(2)->Range(1, 1<<15)->Complexity();
+//BENCHMARK(vectorCreateAndPushBack)->RangeMultiplier(2)->Range(1, 1<<15)->Complexity();

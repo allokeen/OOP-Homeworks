@@ -11,7 +11,7 @@ void pauseAndResume(State& state) {
 }
 
 // On my machine it takes ~330ns
-BENCHMARK(pauseAndResume);
+//BENCHMARK(pauseAndResume);
 
 
 void somethingInPauseAndResume(State& state) {
@@ -39,7 +39,7 @@ void somethingInPauseAndResume(State& state) {
 }
 
 // This benchmark will take very long time to finish - result should be 0(1)
-BENCHMARK(somethingInPauseAndResume)->RangeMultiplier(2)->Range(1, 1<<15)->Complexity();
+//BENCHMARK(somethingInPauseAndResume)->RangeMultiplier(2)->Range(1, 1<<15)->Complexity();
 
 void linearComplexityAndSomethingInPauseAndResume(State& state) {
 
@@ -72,4 +72,4 @@ void linearComplexityAndSomethingInPauseAndResume(State& state) {
 // Linear complexity will be probably lost here - that was case for range to 2^10 - I've got 0(1)
 // That's why I've increased range from 2^10 to 2^15 and complexity was correct O(N)
 // Conclusion - measured time must be much larger than Pause/Resume overhead
-BENCHMARK(linearComplexityAndSomethingInPauseAndResume)->RangeMultiplier(2)->Range(1, 1<<15)->Complexity();
+//BENCHMARK(linearComplexityAndSomethingInPauseAndResume)->RangeMultiplier(2)->Range(1, 1<<15)->Complexity();

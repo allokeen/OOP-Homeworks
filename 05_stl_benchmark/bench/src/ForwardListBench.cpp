@@ -22,13 +22,8 @@ void emptyForwardList(State& state) {
     auto N = state.range(0);
     auto size = (std::size_t)N;
     std::forward_list<Small> forwardList(size);
-    Small x;
-    for( auto _ : state){
 
-        state.PauseTiming();
-        for(auto i=0; i<N; i++)
-            forwardList.push_front(x);
-        state.ResumeTiming();
+    for( auto _ : state){
 
         forwardList.empty();
     }
@@ -53,7 +48,7 @@ void maxSizeForwardList(State& state) {
 BENCHMARK(maxSizeForwardList)->RangeMultiplier(2)->Range(1, 1024)->Complexity();
 
 
-void clearForwardList(State& state) { //?????????????????????????????????????????????????????
+void clearForwardList(State& state) {
 
     auto N = state.range(0);
     auto size = (std::size_t)N;
@@ -75,14 +70,16 @@ void insertAfterForwardList(State& state) {
 
     auto N = state.range(0);
     auto size = (std::size_t)N;
-
+    std::forward_list<Small> forwardList(size);
+    auto start = forwardList.before_begin();
+    Small x;
     for( auto _ : state){
-        state.PauseTiming();
-        std::forward_list<Small> forwardList(size);
-        Small x;
-        auto start = forwardList.begin();
-        state.ResumeTiming();
         forwardList.insert_after( start,x );
+
+        state.PauseTiming();
+        forwardList.pop_front();
+        state.ResumeTiming();
+
     }
     state.SetComplexityN(N);
 }
@@ -93,52 +90,47 @@ void eraseAfterForwardList(State& state) {
 
     auto N = state.range(0);
     auto size = (std::size_t)N;
-
+    std::forward_list<Small> forwardList(size);
+    Small x;
+    auto start = forwardList.before_begin();
     for( auto _ : state){
         state.PauseTiming();
-        std::forward_list<Small> forwardList(size);
-        Small x;
-        forwardList.insert_after( forwardList.begin(),x );
-        auto element = forwardList.before_begin();
+        forwardList.insert_after( start,x );
         state.ResumeTiming();
-
-        forwardList.erase_after( element );
+        forwardList.erase_after( start );
     }
     state.SetComplexityN(N);
 }
 
 BENCHMARK(eraseAfterForwardList)->RangeMultiplier(2)->Range(1, 1024)->Complexity();
 
-void pushFrontAfterForwardList(State& state) {
+void pushFrontForwardList(State& state) {
 
     auto N = state.range(0);
     auto size = (std::size_t)N;
-
+    std::forward_list<Small> forwardList(size);
+    Small x;
     for( auto _ : state){
-        state.PauseTiming();
-        std::forward_list<Small> forwardList(size);
-        Small x;
-        state.ResumeTiming();
-
         forwardList.push_front(x);
+        state.PauseTiming();
+        forwardList.pop_front();
+        state.ResumeTiming();
     }
     state.SetComplexityN(N);
 }
 
-BENCHMARK(pushFrontAfterForwardList)->RangeMultiplier(2)->Range(1, 1024)->Complexity();
+BENCHMARK(pushFrontForwardList)->RangeMultiplier(2)->Range(1, 1024)->Complexity();
 
 void popFrontForwardList(State& state) {
 
     auto N = state.range(0);
     auto size = (std::size_t)N;
-
+    std::forward_list<Small> forwardList(size);
+    Small x;
     for( auto _ : state){
         state.PauseTiming();
-        std::forward_list<Small> forwardList(size);
-        Small x;
         forwardList.push_front(x);
         state.ResumeTiming();
-
         forwardList.pop_front();
     }
     state.SetComplexityN(N);
@@ -153,11 +145,7 @@ void resizeForwardList(State& state) {
     std::forward_list<Small> forwardList(size);
 
     for( auto _ : state) {
-        state.PauseTiming();
-        auto x= rand();
-        state.ResumeTiming();
-
-        forwardList.resize(x);
+        forwardList.resize(size);
     }
     state.SetComplexityN(N);
 }
@@ -217,40 +205,36 @@ void spliceAfterForwardList(State& state) {
 
 BENCHMARK(spliceAfterForwardList)->RangeMultiplier(2)->Range(1, 1024)->Complexity();
 
-void removeForwardList(State& state) { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    Small x;
+void removeForwardList(State& state) {
     auto N = state.range(0);
     auto size = (std::size_t)N;
     std::forward_list<Small> forwardList(size);
+    Small x;
 
     for( auto _ : state) {
         state.PauseTiming();
-        for( auto i=0; i<N; i++ )
-        {
+        for(auto i=0; i<N; i++)
             forwardList.push_front(x);
-        }
         state.ResumeTiming();
-        forwardList.remove(x);  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        forwardList.remove(x);
     }
     state.SetComplexityN(N);
 }
 
 BENCHMARK(removeForwardList)->RangeMultiplier(2)->Range(1, 1024)->Complexity();
 
-void removeIfForwardList(State& state) { //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    Small x;
+void removeIfForwardList(State& state) {
     auto N = state.range(0);
     auto size = (std::size_t)N;
     std::forward_list<Small> forwardList(size);
+    Small x;
 
     for( auto _ : state) {
         state.PauseTiming();
-        for( auto i=0; i<N; i++ )
-        {
+        for(auto i=0; i<N; i++)
             forwardList.push_front(x);
-        }
         state.ResumeTiming();
-        //forwardList.remove_if(x);  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+       forwardList.remove_if([x](Small y){return y == x;});
     }
     state.SetComplexityN(N);
 }
@@ -280,10 +264,8 @@ void uniqueForwardList(State& state)
 
     for( auto _ : state) {
         state.PauseTiming();
-        for( auto i=0; i<N; i++ )
-        {
+        for(auto i=0; i<N; i++)
             forwardList.push_front(x);
-        }
         state.ResumeTiming();
         forwardList.unique();
     }
@@ -297,14 +279,8 @@ void sortForwardList(State& state)
     auto size = (std::size_t)N;
     std::forward_list<Small> forwardList(size);
     Small x;
-
+    forwardList.push_front(x);
     for( auto _ : state) {
-        state.PauseTiming();
-        for( auto i=0; i<N; i++ )
-        {
-            forwardList.push_front(x);
-        }
-        state.ResumeTiming();
         forwardList.sort();
     }
     state.SetComplexityN(N);

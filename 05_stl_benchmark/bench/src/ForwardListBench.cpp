@@ -1,6 +1,5 @@
-#include "Small.h"
 #include "BenchIncludes.h"
-#include <forward_list>
+
 
 void frontForwardList(State& state) {
 
@@ -9,12 +8,10 @@ void frontForwardList(State& state) {
     std::forward_list<Small> forwardList(size);
 
     for( auto _ : state){
-
         auto result = forwardList.front();
     }
     state.SetComplexityN(N);
 }
-
 BENCHMARK(frontForwardList)->RangeMultiplier(2)->Range(1, 1024)->Complexity();
 
 void emptyForwardList(State& state) {
@@ -24,7 +21,6 @@ void emptyForwardList(State& state) {
     std::forward_list<Small> forwardList(size);
 
     for( auto _ : state){
-
         forwardList.empty();
     }
     state.SetComplexityN(N);
@@ -145,7 +141,7 @@ void resizeForwardList(State& state) {
     std::forward_list<Small> forwardList(size);
 
     for( auto _ : state) {
-        forwardList.resize(size);
+        forwardList.resize(rand()%N);
     }
     state.SetComplexityN(N);
 }
@@ -277,10 +273,13 @@ void sortForwardList(State& state)
 {
     auto N = state.range(0);
     auto size = (std::size_t)N;
-    std::forward_list<Small> forwardList(size);
     Small x;
-    forwardList.push_front(x);
     for( auto _ : state) {
+        state.PauseTiming();
+        std::forward_list<Small> forwardList(size);
+        for(auto i=0; i<N; i++)
+            forwardList.push_front(x);
+        state.ResumeTiming();
         forwardList.sort();
     }
     state.SetComplexityN(N);

@@ -21,11 +21,11 @@ struct Small {
     }
 
     bool operator<(const Small &rhs) const {
-        return this->data < rhs.data;
+        return this->data[0] < rhs.data[0];
     }
 
     bool operator==(const Small &rhs) const {
-        return this->data == rhs.data;
+        return this->data[0] == rhs.data[0];
     }
 };
 

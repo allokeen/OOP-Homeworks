@@ -1,6 +1,4 @@
-#include "Small.h"
 #include "BenchIncludes.h"
-#include <unordered_map>
 /*
 empty, size, max_size,
 clear, insert, erase, swap,
@@ -8,10 +6,18 @@ at, operator[], count, find, equal_range,
 rehash, reserve*/
 
 void emptyUnorderedMap(State& state) {
-
+    Small x;
     auto N = state.range(0);
     auto size = (std::size_t)N;
-    std::unordered_map<int, Small> map;
+    std::unordered_map<Small, int> map;
+
+    for(auto i=0; i<size; i++)
+    {
+        x.randomize();
+        auto y= rand()%size;
+        map.insert({x,y});
+    }
+
     for( auto _ : state){
         map.empty();
     }
@@ -21,10 +27,18 @@ void emptyUnorderedMap(State& state) {
 BENCHMARK(emptyUnorderedMap)->RangeMultiplier(2)->Range(1, 1024)->Complexity();
 
 void sizeUnorderedMap(State& state) {
-
+    Small x;
     auto N = state.range(0);
     auto size = (std::size_t)N;
-    std::unordered_map<int, Small> map;
+    std::unordered_map<Small, int> map;
+
+    for(auto i=0; i<size; i++)
+    {
+        x.randomize();
+        auto y= rand()%size;
+        map.insert({x,y});
+    }
+
     for( auto _ : state){
         map.size();
     }
@@ -35,9 +49,18 @@ BENCHMARK(sizeUnorderedMap)->RangeMultiplier(2)->Range(1, 1024)->Complexity();
 
 void maxSizeUnorderedMap(State& state) {
 
+    Small x;
     auto N = state.range(0);
     auto size = (std::size_t)N;
-    std::unordered_map<int, Small> map;
+    std::unordered_map<Small, int> map;
+
+    for(auto i=0; i<size; i++)
+    {
+        x.randomize();
+        auto y= rand()%size;
+        map.insert({x,y});
+    }
+
     for( auto _ : state){
         map.max_size();
     }
@@ -50,10 +73,17 @@ void clearUnorderedMap(State& state) {
     Small x;
     auto N = state.range(0);
     auto size = (std::size_t)N;
-    std::unordered_map<int, Small> map;
-    for( auto i=0; i<N; i++)
-        map.insert({i,x});
+
     for( auto _ : state){
+        state.PauseTiming();
+        std::unordered_map<Small, int> map;
+        for(auto i=0; i<size; i++)
+        {
+            x.randomize();
+            auto y= rand()%size;
+            map.insert({x,y});
+        }
+        state.ResumeTiming();
         map.clear();
     }
     state.SetComplexityN(N);
@@ -65,11 +95,18 @@ void insertUnorderedMap(State& state) {
     Small x;
     auto N = state.range(0);
     auto size = (std::size_t)N;
-    std::unordered_map<int, Small> map;
+    std::unordered_map<Small, int> map;
+    auto z= rand()%size;
+
+    for(auto i=0; i<size; i++)
+    {
+        x.randomize();
+        auto y= rand()%size;
+        map.insert({x,y});
+    }
 
     for( auto _ : state){
-        for( auto i=0; i<N; i++)
-            map.insert({i,x});
+        map.insert({x,z});
     }
     state.SetComplexityN(N);
 }
@@ -80,14 +117,22 @@ void eraseUnorderedMap(State& state) {
     Small x;
     auto N = state.range(0);
     auto size = (std::size_t)N;
-    std::unordered_map<int, Small> map;
+    std::unordered_map<Small, int> map;
+    auto z= rand()%size;
+
+    for(auto i=0; i<size; i++)
+    {
+        x.randomize();
+        auto y= rand()%size;
+        map.insert({x,y});
+    }
 
     for( auto _ : state){
         state.PauseTiming();
-        for(auto i=0; i<N; i++)
-            map.insert({i,x});
+        x.randomize();
+        map.insert({x,z});
         state.ResumeTiming();
-        map.erase(rand()%N);
+        map.erase(x);
     }
     state.SetComplexityN(N);
 }
@@ -95,15 +140,21 @@ void eraseUnorderedMap(State& state) {
 BENCHMARK(eraseUnorderedMap)->RangeMultiplier(2)->Range(1, 1024)->Complexity();
 
 void swapUnorderedMap(State& state) {
-    Small x,y;
+    Small x;
     auto N = state.range(0);
     auto size = (std::size_t)N;
-    std::unordered_map<int, Small> map;
-    std::unordered_map<int, Small> map1;
-    for(auto i=0; i<N; i++) {
-        map.insert({i, x});
-        map1.insert({i, y});
+    std::unordered_map<Small, int> map;
+    std::unordered_map<Small, int> map1;
+
+    for(auto i=0; i<size; i++)
+    {
+        auto z= rand()%size;
+        x.randomize();
+        map.insert({x,z});
+        x.randomize();
+        map1.insert({x,z});
     }
+
     for( auto _ : state){
         map.swap(map1);
     }
@@ -116,12 +167,17 @@ void atUnorderedMap(State& state) {
     Small x;
     auto N = state.range(0);
     auto size = (std::size_t)N;
-    std::unordered_map<int, Small> map;
-    for(auto i=0; i<N; i++)
-        map.insert({i, x});
+    std::unordered_map<Small, int> map;
+
+    for(auto i=0; i<size; i++)
+    {
+        x.randomize();
+        auto y= rand()%size;
+        map.insert({{x},y});
+    }
 
     for( auto _ : state){
-        map.at(rand()%N);
+        map.at({x});
     }
     state.SetComplexityN(N);
 }
@@ -132,11 +188,19 @@ void operatorUnorderedMap(State& state) {
     Small x;
     auto N = state.range(0);
     auto size = (std::size_t)N;
-    std::unordered_map<int, Small> map;
+    std::unordered_map<Small, int> map;
+    auto z=rand()%size;
+
+    for(auto i=0; i<size; i++)
+    {
+        x.randomize();
+        auto y= rand()%size;
+        map.insert({x,y});
+    }
 
     for( auto _ : state){
-        for(auto i=0; i<N; i++)
-            map[i]=x;
+        x.randomize();
+        map[x]= z;
     }
     state.SetComplexityN(N);
 }
@@ -147,13 +211,18 @@ void countUnorderedMap(State& state) {
     Small x;
     auto N = state.range(0);
     auto size = (std::size_t)N;
-    std::unordered_map<int, Small> map;
+    std::unordered_map<Small, int> map;
 
-    for(auto i=0; i<N; i++)
-        map.insert({i,x});
+    for(auto i=0; i<size; i++)
+    {
+        x.randomize();
+        auto y= rand()%size;
+        map.insert({x,y});
+    }
 
     for( auto _ : state){
-        map.count(rand()%N);
+        x.randomize();
+        map.count(x);
     }
     state.SetComplexityN(N);
 }
@@ -164,13 +233,18 @@ void findUnorderedMap(State& state) {
     Small x;
     auto N = state.range(0);
     auto size = (std::size_t)N;
-    std::unordered_map<int, Small> map;
+    std::unordered_map<Small, int> map;
 
-    for(auto i=0; i<N; i++)
-        map.insert({i,x});
+    for(auto i=0; i<size; i++)
+    {
+        x.randomize();
+        auto y= rand()%size;
+        map.insert({x,y});
+    }
 
     for( auto _ : state){
-        map.find(rand()%N);
+        x.randomize();
+        map.find(x);
     }
     state.SetComplexityN(N);
 }
@@ -181,13 +255,18 @@ void equalRangeUnorderedMap(State& state) {
     Small x;
     auto N = state.range(0);
     auto size = (std::size_t)N;
-    std::unordered_map<int, Small> map;
+    std::unordered_map<Small, int> map;
 
-    for(auto i=0; i<N; i++)
-        map.insert({rand()%N,x});
+    for(auto i=0; i<size; i++)
+    {
+        x.randomize();
+        auto y= rand()%size;
+        map.insert({x,y});
+    }
 
     for( auto _ : state){
-        map.equal_range(rand()%N);
+        x.randomize();
+        map.equal_range(x);
     }
     state.SetComplexityN(N);
 }
@@ -197,16 +276,21 @@ BENCHMARK(equalRangeUnorderedMap)->RangeMultiplier(2)->Range(1, 1024)->Complexit
 void rehashUnorderedMap(State& state) {
     Small x;
     auto N = state.range(0);
+    auto size = (std::size_t)N;
     for( auto _ : state){
         state.PauseTiming();
-             std::unordered_map<int, Small> map;
+            std::unordered_map<Small, int> map;
         state.ResumeTiming();
 
-        map.rehash(N);
+        map.rehash(size);
 
         state.PauseTiming();
-             for(auto i=0; i<N; i++)
-                 map.insert({i,x});
+        for(auto i=0; i<size; i++)
+        {
+            x.randomize();
+            auto y= rand()%size;
+            map.insert({x,y});
+        }
         state.ResumeTiming();
     }
     state.SetComplexityN(N);
@@ -217,16 +301,21 @@ BENCHMARK(rehashUnorderedMap)->RangeMultiplier(2)->Range(1, 1024)->Complexity();
 void reserveUnorderedMap(State& state) {
     Small x;
     auto N = state.range(0);
+    auto size = (std::size_t)N;
     for( auto _ : state){
         state.PauseTiming();
-        std::unordered_map<int, Small> map;
+        std::unordered_map<Small, int> map;
         state.ResumeTiming();
 
-        map.reserve(N);
+        map.reserve(size);
 
         state.PauseTiming();
-        for(auto i=0; i<N; i++)
-            map.insert({i,x});
+        for(auto i=0; i<size; i++)
+        {
+            x.randomize();
+            auto y= rand()%size;
+            map.insert({x,y});
+        }
         state.ResumeTiming();
     }
     state.SetComplexityN(N);

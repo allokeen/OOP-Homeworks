@@ -89,7 +89,7 @@ MainWindow::MainWindow(QWidget *parent) :
      startupState->addTransition(ui->pbOpen, SIGNAL(clicked(bool)), openState);
 
      openState->addTransition(this, SIGNAL(error()), errorState);
-     openState->addTransition(ui->pbOpen, SIGNAL(clicked(bool)), viewState);
+     openState->addTransition(this, SIGNAL(opened()), viewState);
 
      errorState->addTransition(ui->pbOpen, SIGNAL(clicked(bool)), openState);
 

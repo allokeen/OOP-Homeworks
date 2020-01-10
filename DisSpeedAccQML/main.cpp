@@ -14,20 +14,6 @@ int main(int argc, char *argv[])
     qmlRegisterType<Displacement>("dis", 1, 0,"Displacement");
     qmlRegisterType<Speed>("spe", 1, 0,"Speed");
 
-    Displacement d{};
-    Speed s{};
-    Acceleration a{};
-
-    QObject::connect(&d,
-                     SIGNAL(changed(double)),
-                     &s,
-                     SLOT(onDisplacementChanged(double)));
-
-    QObject::connect(&s,
-                     SIGNAL(changed(double)),
-                     &a,
-                     SLOT(onSpeedChanged(double)));
-
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

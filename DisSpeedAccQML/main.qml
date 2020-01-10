@@ -50,7 +50,7 @@ Window {
         y: 56
         width: 126
         height: 40
-        text: qsTr("Text Input")
+        text: qsTr("0")
         font.pixelSize: 20
     }
 
